@@ -30,15 +30,24 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(productsICanEat.length).toBe(FILL_ME_IN);
+    expect(productsICanEat.length).toBe(1);
   });
 
   it("given I'm allergic to nuts and hate mushrooms, it should find a pizza I can eat (functional)", function () {
       var productsICanEat = [];
 
       /* solve using filter() & all() / any() */
+      productsICanEat = products
+      .filter(function(x){
+        return x['ingredients'].every(function(y){
+          
+          return y !== "mushrooms" && x['containsNuts'] === false;
+        })
 
-      expect(productsICanEat.length).toBe(FILL_ME_IN);
+      });
+
+      
+      expect(productsICanEat.length).toBe(1);
   });
 
   /*********************************************************************************/
@@ -52,13 +61,20 @@ describe("About Applying What We Have Learnt", function() {
       }
     }
     
-    expect(sum).toBe(FILL_ME_IN);
+    expect(sum).toBe(233168);
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
+    var sum; /* try chaining range() and reduce() */
+    
+    sum = _.range(1, 1000).reduce(function(cumul, x){
+      var val;
+      (x % 3 === 0) || (x % 5 === 0) ? val = x : val = 0;
+      return cumul + val;
+    }, 0);
 
-    expect(233168).toBe(FILL_ME_IN);
+
+    expect(233168).toBe(sum);
   });
 
   /*********************************************************************************/
@@ -70,8 +86,8 @@ describe("About Applying What We Have Learnt", function() {
             ingredientCount[products[i].ingredients[j]] = (ingredientCount[products[i].ingredients[j]] || 0) + 1;
         }
     }
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    console.log(ingredientCount['mushrooms']);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
@@ -79,7 +95,14 @@ describe("About Applying What We Have Learnt", function() {
 
     /* chain() together map(), flatten() and reduce() */
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    /* Solutions using ForEach) */
+    products.forEach(function(x){
+      x.ingredients.forEach(function(y){
+        ingredientCount[y] == undefined ? ingredientCount[y] = 1 : ingredientCount[y]++;
+      });
+    });
+
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
